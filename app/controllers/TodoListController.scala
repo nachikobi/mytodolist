@@ -10,9 +10,9 @@ import play.api.mvc.{AbstractController, ControllerComponents}
 class TodoListController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   /**
-   * インデックスページを表示
-   */
-  def index = Action {
+    * インデックスページを表示
+    */
+  def index = Action { implicit request =>
     // 200 OK ステータスで app/views/index.scala.html をレンダリングする
     Ok(views.html.index("Welcome to Play application!"))
   }
