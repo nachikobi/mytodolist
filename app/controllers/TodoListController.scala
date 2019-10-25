@@ -17,4 +17,16 @@ class TodoListController @Inject()(cc: ControllerComponents) extends AbstractCon
     Ok(views.html.index("Welcome to Play application!"))
   }
 
+  def tasks = TODO
+
+  def entry(id: Int) = TODO
+
+  def startRegistration = TODO
+
+  def registerDate = TODO
+
+  def registerTask = TODO
+
+  def confirm = TODO
+
 }

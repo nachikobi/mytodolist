@@ -1,5 +1,12 @@
 # TodoList
 GET     /                           controllers.TodoListController.index
+GET     /todolist/tasks             controllers.TodoListController.tasks
+GET     /todolist/tasks/:id         controllers.TodoListController.entry(id: Int)
+GET     /todolist/register          controllers.TodoListController.startRegistration
+GET     /todolist/tasks/date        controllers.TodoListController.registerDate
+GET     /todolist/tasks/task        controllers.TodoListController.registerTask
+GET     /todolist/tasks/confirm     controllers.TodoListController.confirm
+GET     /todolist                   controllers.Default.redirect(to = "/todolist/tasks")
 
 # Formapp
 ## Normal
