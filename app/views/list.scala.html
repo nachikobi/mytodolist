@@ -1,0 +1,65 @@
+@(tasks: Seq[models.Task])
+
+@import helper._
+
+@entryRow(entry: models.Task) = {
+    <tr id="@entry.id">
+        <td><a href="/todolist/tasks/@entry.id">@entry.id</a></td>
+        <td class="done">
+            @if(entry.isDone == false) {
+                まだ
+            } else {
+                やった
+            }
+        </td>
+        <td class="title">@entry.title</td>
+        <td class="date">@entry.createdAt</td>
+        <td>
+            <a href="/todolist/tasks/@entry.id/comp">
+                <span class="w3-button w3-green">
+                @if(entry.isDone == false) {
+                    完了
+                } else {
+                    未完了
+                }
+                </span>
+            </a>
+        </td>
+        <td>
+            <a href="/todolist/tasks/@entry.id/delete">編集</a>
+        </td>
+        <td>
+            <a href="/todolist/tasks/@entry.id/delete">削除</a>
+        </td>
+    </tr>
+}
+
+@views.html.main("") {
+    <h1>ToDoList on Play Framework</h1>
+    <div class="w3-row">
+        <div class="w3-half">
+            <h3>登録済みタスク</h3>
+        </div>
+        <div class="w3-right">
+            <a href="/todolist/tasks/create"><span class="w3-button w3-green">新規登録</span></a>
+        </div>
+    </div>
+    @if(tasks.nonEmpty) {
+    <table id="todolist-tasks-list" class="w3-table w3-striped w3-border">
+        <tr>
+            <th></th>
+            <th>やった？</th>
+            <th>やること</th>
+            <th>投稿日時</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        @for(entry <- tasks) {
+            @entryRow(entry)
+        }
+    </table>
+    } else {
+    <p>登録されたタスクはありません</p>
+    }
+}

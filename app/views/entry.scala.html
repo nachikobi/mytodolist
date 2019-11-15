@@ -1,0 +1,33 @@
+@(entry: models.Task)
+
+@views.html.main("登録済みタスク") {
+    <table class="w3-table">
+        <tr>
+            <th>ID</th>
+            <td>@entry.id</td>
+        </tr>
+        <tr>
+            <th>やること</th>
+            <td>@entry.title</td>
+        </tr>
+        <tr>
+            <th>詳細</th>
+            <td><textarea disabled>@entry.description</textarea></td>
+        </tr>
+        <tr>
+            <th>やった？</th>
+            <td>
+                @if(entry.isDone == false) {
+                    まだ
+                } else {
+                    やった
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>投稿日時</th>
+            <td>@entry.createdAt</td>
+        </tr>
+    </table>
+    <a href="/todolist/tasks">戻る</a>
+}

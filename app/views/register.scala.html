@@ -1,0 +1,24 @@
+@(implicit request: RequestHeader)
+
+@import helper._
+
+@title = @{request.session.get("todolist::title").getOrElse("")}
+@description = @{request.session.get("todolist::description").getOrElse("")}
+
+@views.html.main(title) {
+    <h3>新規登録</h3>
+    <form action="/todolist/tasks/create" method="POST">
+        <div>
+        <h4>やること</h4>
+        @CSRF.formField
+        <input type="text" name="title" value="@title">
+        </div>
+        <div>
+        <h4>詳細</h4>
+        @CSRF.formField
+        <textarea name="description">@description</textarea>
+        </div>
+        @CSRF.formField
+        <input type="submit" value="登録">
+    </form>
+}
