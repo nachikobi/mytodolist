@@ -1,11 +1,13 @@
 # TodoList
 GET     /                           controllers.TodoListController.index
-GET     /todolist/tasks             controllers.TodoListController.tasks
+GET     /todolist/tasks             controllers.TodoListController.list
+GET     /todolist/tasks/create      controllers.TodoListController.register
+POST    /todolist/tasks/create      controllers.TodoListController.confirm
 GET     /todolist/tasks/:id         controllers.TodoListController.entry(id: Int)
-GET     /todolist/register          controllers.TodoListController.startRegistration
-GET     /todolist/tasks/date        controllers.TodoListController.registerDate
-GET     /todolist/tasks/task        controllers.TodoListController.registerTask
-GET     /todolist/tasks/confirm     controllers.TodoListController.confirm
+GET     /todolist/tasks/:id/comp    controllers.TodoListController.comp(id: Int)
+GET     /todolist/tasks/:id/edit    controllers.TodoListController.edit(id: Int)
+POST    /todolist/tasks/:id/edit    controllers.TodoListController.update(id: Int)
+GET     /todolist/tasks/:id/delete  controllers.TodoListController.delete(id: Int)
 GET     /todolist                   controllers.Default.redirect(to = "/todolist/tasks")
 
 # Formapp
