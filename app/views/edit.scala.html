@@ -43,10 +43,13 @@
             <input type="radio" name="isDone" value=false @if(isDone == false){ checked } required>まだ</input>
             <input type="radio" name="isDone" value=true @if(isDone == true){ checked } required>やった</input>
         </td>
+        <td>
+            @CSRF.formField
+            <input type="submit" value="変更">
+            </form>
+        </td>
     </tr>
 </table>
-@CSRF.formField
-<input type="submit" value="変更">
-</form>
+
 <a href="/todolist/tasks">戻る</a>
 }
