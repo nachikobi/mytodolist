@@ -45,11 +45,37 @@ class TodoListController @Inject()(tasks: Tasks)(cc: ControllerComponents) exten
     Redirect(routes.TodoListController.list).withNewSession
   }
 
-  def edit(id: Int) = TODO
+  def edit(id: Int) = Action { request =>
+    tasks.findByID(id) match {
+      case Some(e) => Ok(views.html.edit(request, e))
+      case None    => NotFound(s"Np entry for id=${id}")
+    }
+  }
 
-  def update(id: Int) = TODO
+  def update(id: Int) = Action { request =>
+    (for {
+      param       <- request.body.asFormUrlEncoded
+      title       <- param.get("title").flatMap(_.headOption)
+      description <- param.get("description").flatMap(_.headOption)
+      isDone      <- param.get("isDone").flatMap(_.headOption)
+    } yield {
+      if (isDone == "false") {
+        tasks.save(Task(id, title, description, false, null))
+      } else {
+        tasks.save(Task(id, title, description, true, null))
+      }
+      Redirect("/todolist/tasks").withNewSession
+    }).getOrElse[Result](Redirect("/todolist/tasks/" + id + "/edit"))
+  }
 
-  def delete(id: Int) = TODO
+  def delete(id: Int) = Action {
+    tasks.findByID(id) match {
+      case Some(e) =>
+        tasks.delete(id)
+      case None => NotFound(s"No entry for id=${id}")
+    }
+    Redirect(routes.TodoListController.list).withNewSession
+  }
 
   def register = Action { request =>
     Ok(views.html.register(request)).withNewSession

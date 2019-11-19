@@ -1,0 +1,52 @@
+@(implicit request: RequestHeader, entry: models.Task)
+
+@import helper._
+
+@title = @{request.session.get("todolist::title").getOrElse(entry.title)}
+@description = @{request.session.get("todolist::description").getOrElse(entry.description)}
+@isDone = @{request.session.get("todolist::isDone").getOrElse(entry.isDone)}
+
+@views.html.main("タスク編集") {
+<table class="w3-table">
+    <tr>
+        <th>ID</th>
+        <td>@entry.id</td>
+    </tr>
+    <tr>
+        <th>やること</th>
+        <td>@entry.title</td>
+        <td>
+            <form action="/todolist/tasks/@entry.id/edit" method="POST">
+            @CSRF.formField
+            <input type="text" name="title" value="@title">
+        </td>
+    </tr>
+    <tr>
+        <th>詳細</th>
+        <td><textarea disabled>@entry.description</textarea></td>
+        <td>
+            @CSRF.formField
+            <textarea name="description">@description</textarea>
+        </td>
+    </tr>
+    <tr>
+        <th>やった？</th>
+        <td>
+            @if(entry.isDone == false) {
+            まだ
+            } else {
+            やった
+            }
+        </td>
+        <td>
+            @CSRF.formField
+            <input type="radio" name="isDone" value=false @if(isDone == false){ checked } required>まだ</input>
+            <input type="radio" name="isDone" value=true @if(isDone == true){ checked } required>やった</input>
+        </td>
+    </tr>
+</table>
+@CSRF.formField
+<input type="submit" value="変更">
+</form>
+<a href="/todolist/tasks">戻る</a>
+}

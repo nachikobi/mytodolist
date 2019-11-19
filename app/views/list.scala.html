@@ -16,17 +16,18 @@
         <td class="date">@entry.createdAt</td>
         <td>
             <a href="/todolist/tasks/@entry.id/comp">
-                <span class="w3-button w3-green">
                 @if(entry.isDone == false) {
-                    完了
+                    <span class="w3-button w3-green">
+                    やった！に変更
                 } else {
-                    未完了
+                    <span class="w3-button w3-green">
+                    まだだった！に変更
                 }
                 </span>
             </a>
         </td>
         <td>
-            <a href="/todolist/tasks/@entry.id/delete">編集</a>
+            <a href="/todolist/tasks/@entry.id/edit">編集</a>
         </td>
         <td>
             <a href="/todolist/tasks/@entry.id/delete">削除</a>
