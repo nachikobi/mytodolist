@@ -1,10 +1,13 @@
-@(tasks: Seq[models.Task])
+@(implicit request: RequestHeader, tasks: Seq[models.Task], userID: Int, userName: String, taskIDs: Seq[Int])
 
 @import helper._
 
+@title = @{request.session.get("todolist::title").getOrElse("")}
+@isDone = @{request.session.get("todolist::isDone").getOrElse("")}
+
 @entryRow(entry: models.Task) = {
     <tr id="@entry.id">
-        <td><a href="/todolist/tasks/@entry.id">@entry.id</a></td>
+        <td><a href="/todolist/@userID/tasks/@entry.id">@entry.id</a></td>
         <td class="done">
             @if(entry.isDone == false) {
                 まだ
@@ -15,7 +18,7 @@
         <td class="title">@entry.title</td>
         <td class="date">@entry.createdAt</td>
         <td>
-            <a href="/todolist/tasks/@entry.id/comp">
+            <a href="/todolist/@userID/tasks/@entry.id/comp">
                 @if(entry.isDone == false) {
                     <span class="w3-button w3-green">
                     やった！に変更
@@ -27,22 +30,73 @@
             </a>
         </td>
         <td>
-            <a href="/todolist/tasks/@entry.id/edit">編集</a>
+            <a href="/todolist/@userID/tasks/@entry.id/edit">編集</a>
         </td>
         <td>
-            <a href="/todolist/tasks/@entry.id/delete">削除</a>
+            <a href="/todolist/@userID/tasks/@entry.id/delete">削除</a>
         </td>
     </tr>
 }
 
-@views.html.main("") {
+@idRow(entry: models.ID) = {
+    <tr id="@entry.userID">
+        <td class="userID">@entry.userID</td>
+        <td class="taskID">@entry.taskID</td>
+    </tr>
+}
+
+@views.html.main("タスク一覧") {
     <h1>ToDoList on Play Framework</h1>
+    <div class="w3-row">
+        <div class="w3-right">
+            ようこそ @userName さん<br>
+            <a href="/todolist/@userID/userEdit">パスワードを変更</a>
+            <a href="/todolist/login">ログアウト</a>
+            <a href="/todolist/@userID/withdrawal">退会</a>
+        </div>
+    </div>
+    <div class="w3-row">
+        <div class="w3-half">
+            <h3>タスク検索</h3>
+        </div>
+    </div>
+    <table class="w3-table w3-border">
+        <tr>
+            <th>タスク名</th>
+            <td>
+                <form action="/todolist/@userID/tasks" method="POST">
+                @CSRF.formField
+                <input type="text" name="title" value="@title">
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>完了状態</th>
+            <td>
+                @CSRF.formField
+                <input type="radio" name="isDone" value=false @if(isDone == false){ checked } required>まだ</input>
+                <input type="radio" name="isDone" value=true @if(isDone == true){ checked } required>やった</input>
+            </td>
+            <td>
+                @CSRF.formField
+                <input type="submit" value="検索">
+                </form>
+            </td>
+            <td>
+                <a href="/todolist/@userID/tasks">全タスクを表示</a>
+            </td>
+        </tr>
+    </table>
+
+    <br><br>
+
     <div class="w3-row">
         <div class="w3-half">
             <h3>登録済みタスク</h3>
         </div>
         <div class="w3-right">
-            <a href="/todolist/tasks/create"><span class="w3-button w3-green">新規登録</span></a>
+            <a href="/todolist/@userID/tasks/create"><span class="w3-button w3-green">新規登録</span></a>
         </div>
     </div>
     @if(tasks.nonEmpty) {
@@ -57,7 +111,9 @@
             <th></th>
         </tr>
         @for(entry <- tasks) {
-            @entryRow(entry)
+            @if((taskIDs.indexOf(entry.id))!=(-1)){
+                @entryRow(entry)
+            }
         }
     </table>
     } else {

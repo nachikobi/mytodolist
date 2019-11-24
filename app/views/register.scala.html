@@ -1,13 +1,13 @@
-@(implicit request: RequestHeader)
+@(implicit request: RequestHeader, userID: Int)
 
 @import helper._
 
 @title = @{request.session.get("todolist::title").getOrElse("")}
 @description = @{request.session.get("todolist::description").getOrElse("")}
 
-@views.html.main(title) {
+@views.html.main("タスク登録") {
     <h3>新規登録</h3>
-    <form action="/todolist/tasks/create" method="POST">
+    <form action="/todolist/@userID/tasks/create" method="POST">
         <div>
         <h4>やること</h4>
         @CSRF.formField
@@ -21,4 +21,6 @@
         @CSRF.formField
         <input type="submit" value="登録">
     </form>
+
+    <a href="/todolist/@userID/tasks">戻る</a>
 }

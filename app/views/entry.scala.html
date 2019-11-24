@@ -1,4 +1,4 @@
-@(entry: models.Task)
+@(entry: models.Task, userID: Int)
 
 @views.html.main("登録済みタスク") {
     <table class="w3-table">
@@ -30,7 +30,7 @@
         </tr>
     </table>
     <br><br>
-    <a href="/todolist/tasks/@entry.id/edit">編集</a>
-    <a href="/todolist/tasks/@entry.id/delete">削除</a><br><br>
-    <a href="/todolist/tasks">戻る</a>
+    <a href="/todolist/@userID/tasks/@entry.id/edit">編集</a>
+    <a href="/todolist/@userID/tasks/@entry.id/delete">削除</a><br><br>
+    <a href="/todolist/@userID/tasks">戻る</a>
 }

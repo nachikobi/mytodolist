@@ -1,0 +1,37 @@
+@(implicit request: RequestHeader, userID: Int)
+
+@import helper._
+
+@name = @{request.session.get("todolist::name").getOrElse("")}
+@oldPass = @{request.session.get("todolist::oldPass").getOrElse("")}
+@newPass = @{request.session.get("todolist::newPass").getOrElse("")}
+
+@views.html.main("ユーザ更新") {
+    <h3>パスワード変更</h3>
+    <div class="w3-row">
+        <div class="w3-half">
+            <form action="/todolist/@userID/userEdit" method="POST">
+                <div>
+                    <h4>ユーザ名</h4>
+                    @CSRF.formField
+                    <input type="text" name="name" value="@name">
+                </div>
+                <div>
+                    <h4>旧パスワード</h4>
+                    @CSRF.formField
+                    <input type="text" name="oldPass" value="@oldPass">
+                </div>
+                <div>
+                    <h4>新パスワード</h4>
+                    @CSRF.formField
+                    <input type="text" name="newPass" value="@newPass">
+                </div>
+                <br><br>
+                @CSRF.formField
+                <input type="submit" value="更新">
+        </div>
+    </div>
+
+
+    <a href="/todolist/@userID/tasks">戻る</a>
+}

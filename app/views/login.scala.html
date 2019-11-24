@@ -1,0 +1,37 @@
+@(implicit request: RequestHeader)
+
+@import helper._
+@import utility.Digest
+
+@name = @{request.session.get("todolist::name").getOrElse("")}
+@password = @{request.session.get("todolist::password").getOrElse("")}
+
+@entryRow(entry: models.User) = {
+<tr id="@entry.id">
+    <td class="id">@entry.id</td>
+    <td class="title">@entry.name</td>
+    <td class="password">@entry.password</td>
+    <td class="date">@entry.createdAt</td>
+</tr>
+}
+
+@views.html.main("ログイン") {
+    <h3>ログイン</h3>
+    <form action="/todolist/login" method="POST">
+        <div>
+            <h4>ユーザ名</h4>
+            @CSRF.formField
+            <input type="text" name="name" value="@name">
+        </div>
+        <div>
+            <h4>パスワード</h4>
+            @CSRF.formField
+            <input type="text" name="password" value="@password">
+        </div>
+        <br><br>
+        @CSRF.formField
+        <input type="submit" value="ログイン">
+    </form>
+    <br><br>
+    <a href="/todolist/userRegister"><span class="w3-button w3-green">新規登録</span></a>
+}

@@ -17,7 +17,23 @@ CREATE TABLE task (
     created_at timestamp default CURRENT_TIMESTAMP NOT NULL
 );
 
+CREATE TABLE user (
+    id int PRIMARY KEY AUTO_INCREMENT,
+    name varchar(32) NOT NULL,
+    password varchar(255)NOT NULL,
+    created_at timestamp default CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE id (
+    userID int NOT NULL,
+    taskID int NOT NULL
+);
+
 # --- !Downs
 DROP TABLE enquete;
 
 DROP TABLE task;
+
+DROP TABLE user;
+
+DROP TABLE id;

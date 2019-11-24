@@ -1,14 +1,22 @@
 # TodoList
-GET     /                           controllers.TodoListController.index
-GET     /todolist/tasks             controllers.TodoListController.list
-GET     /todolist/tasks/create      controllers.TodoListController.register
-POST    /todolist/tasks/create      controllers.TodoListController.confirm
-GET     /todolist/tasks/:id         controllers.TodoListController.entry(id: Int)
-GET     /todolist/tasks/:id/comp    controllers.TodoListController.comp(id: Int)
-GET     /todolist/tasks/:id/edit    controllers.TodoListController.edit(id: Int)
-POST    /todolist/tasks/:id/edit    controllers.TodoListController.update(id: Int)
-GET     /todolist/tasks/:id/delete  controllers.TodoListController.delete(id: Int)
-GET     /todolist                   controllers.Default.redirect(to = "/todolist/tasks")
+GET     /                                   controllers.TodoListController.index
+GET     /todolist/login                     controllers.TodoListController.login
+POST    /todolist/login                     controllers.TodoListController.loginCheck
+GET     /todolist/userRegister              controllers.TodoListController.userRegister
+POST    /todolist/userRegister              controllers.TodoListController.userConfirm
+GET     /todolist/:userID/userEdit          controllers.TodoListController.userEdit(userID: Int)
+POST    /todolist/:userID/userEdit          controllers.TodoListController.userUpdate(userID: Int)
+GET     /todolist/:userID/withdrawal        controllers.TodoListController.leave(userID: Int)
+GET     /todolist/:userID/tasks             controllers.TodoListController.list(userID: Int)
+POST    /todolist/:userID/tasks             controllers.TodoListController.extract(userID: Int)
+GET     /todolist/:userID/tasks/create      controllers.TodoListController.register(userID: Int)
+POST    /todolist/:userID/tasks/create      controllers.TodoListController.confirm(userID: Int)
+GET     /todolist/:userID/tasks/:id         controllers.TodoListController.entry(userID: Int, id: Int)
+GET     /todolist/:userID/tasks/:id/comp    controllers.TodoListController.comp(userID: Int, id: Int)
+GET     /todolist/:userID/tasks/:id/edit    controllers.TodoListController.edit(userID: Int, id: Int)
+POST    /todolist/:userID/tasks/:id/edit    controllers.TodoListController.update(userID: Int, id: Int)
+GET     /todolist/:userID/tasks/:id/delete  controllers.TodoListController.delete(userID: Int, id: Int)
+GET     /todolist                           controllers.Default.redirect(to = "/todolist/login")
 
 # Formapp
 ## Normal
