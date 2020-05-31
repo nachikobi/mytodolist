@@ -4,7 +4,7 @@
 
 @message = @{request.session.get("formapp::message").getOrElse("")}
 
-@register("メッセージ入力", "/formapp/register/message") {
+@views.html.formapp.register("メッセージ入力", "/formapp/register/message") {
     @CSRF.formField
     <textarea name="message">@message</textarea>
 }
