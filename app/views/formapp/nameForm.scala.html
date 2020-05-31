@@ -4,7 +4,7 @@
 
 @name = @{request.session.get("formapp::name").getOrElse("")}
 
-@register("名前入力", "/formapp/register/name") {
+@views.html.formapp.register("名前入力", "/formapp/register/name") {
     @CSRF.formField
     <input type="text" name="name" value="@name">
 }
