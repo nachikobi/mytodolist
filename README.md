@@ -1,3 +1,8 @@
+実行方法
+---
+ターミナルで `$sbt run` した後、
+http://localhost:9000に接続
+
 Frameworkを用いた小規模Webアプリケーションの開発
 ---
 
